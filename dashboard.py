@@ -697,6 +697,10 @@ def render_table(df: pd.DataFrame) -> None:
 # Main app
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Main app
+# ---------------------------------------------------------------------------
+
 def main() -> None:
     # Header
     st.markdown(
@@ -714,31 +718,33 @@ def main() -> None:
     )
 
     # Load data
-df_full = load_data()
+    df_full = load_data()
 
-if df_full.empty:
-    st.warning(
-        "⚠️ No data found. Click the button below to create the business data.",
-        icon="⚠️",
-    )
+    if df_full.empty:
+        st.warning(
+            "⚠️ No data found. Click the button below to create the business data.",
+            icon="⚠️",
+        )
 
-    if st.button("🚀 Run Scraper", use_container_width=True):
-        with st.spinner("Scraping GTA business data... This may take several minutes."):
-            from scraper import scrape, normalise_phone, save_csv
+        if st.button("🚀 Run Scraper", use_container_width=True):
+            with st.spinner(
+                "Scraping GTA business data... This may take several minutes."
+            ):
+                from scraper import scrape, normalise_phone, save_csv
 
-            records = scrape(max_pages=1, enrich=False)
+                records = scrape(max_pages=1, enrich=False)
 
-            for r in records:
-                if r["phone"]:
-                    r["phone"] = normalise_phone(r["phone"])
+                for r in records:
+                    if r["phone"]:
+                        r["phone"] = normalise_phone(r["phone"])
 
-            save_csv(records)
+                save_csv(records)
 
-        st.success(f"Done! Scraped {len(records):,} businesses.")
-        st.cache_data.clear()
-        st.rerun()
+            st.success(f"Done! Scraped {len(records):,} businesses.")
+            st.cache_data.clear()
+            st.rerun()
 
-    st.stop()
+        st.stop()
 
     # Apply sidebar filters
     df_filtered = render_sidebar(df_full)
