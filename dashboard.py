@@ -269,9 +269,10 @@ PLOTLY_LAYOUT = dict(
         title_font=dict(color="#718096"),
     ),
     colorway=[
-        title=dict(
-    font=dict(family="Outfit, sans-serif", color="#90cdf4", size=14)
-),
+        "#4299e1", "#63b3ed", "#90cdf4", "#48bb78",
+        "#68d391", "#f6ad55", "#fc8181", "#b794f4",
+        "#f687b3", "#76e4f7",
+         ],
         "#68d391", "#f6ad55", "#fc8181", "#b794f4",
         "#f687b3", "#76e4f7",
     ],
