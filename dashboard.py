@@ -466,8 +466,8 @@ if st.button("🧹 Clear all filters", use_container_width=True):
         value=False,
         key="filter_website",
     )
-
-        st.divider()
+    
+    st.divider()
        
     # Apply filters
     filtered = df.copy()
