@@ -467,9 +467,9 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
             value=False,
             key="filter_website",
         )
+            st.divider()
 
-        st.divider()
-        # Apply filters
+    # Apply filters
     filtered = df.copy()
 
     if selected_cities:
@@ -501,27 +501,7 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
             filtered["website"].notna()
         ]
 
-    return filtered    kpi_data = [
-        ("🏢", fmt_number(total_biz),         "Total Businesses"),
-        ("🏙️", fmt_number(num_cities),         "Cities Covered"),
-        ("📂", fmt_number(num_cats),           "Business Categories"),
-        ("📞", f"{pct_phone:.0f}%",            "Have Phone Listed"),
-    ]
-
-    cols = st.columns(4)
-    for col, (icon, value, label) in zip(cols, kpi_data):
-        col.markdown(
-            f"""
-            <div class="kpi-card">
-                <div class="kpi-icon">{icon}</div>
-                <div class="kpi-value">{value}</div>
-                <div class="kpi-label">{label}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-
+    return filtered
 # ---------------------------------------------------------------------------
 # Charts
 # ---------------------------------------------------------------------------
