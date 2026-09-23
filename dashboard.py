@@ -423,7 +423,7 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
             st.session_state.filter_phone = False
             st.session_state.filter_website = False
 
-        if st.button("🧹 Clear all filters", use_container_width=True):
+        if st.button("🧹 Clear all filters", width="stretch"):
             clear_filters()
             st.rerun()
 
@@ -576,7 +576,7 @@ def render_charts(df: pd.DataFrame) -> None:
         fig.update_coloraxes(showscale=False)
         style_fig(fig)
         fig.update_layout(yaxis=dict(categoryorder="total ascending"))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with col2:
         st.markdown('<p class="section-header">📂 Businesses by Category</p>',
@@ -599,7 +599,7 @@ def render_charts(df: pd.DataFrame) -> None:
         )
         style_fig(fig2)
         fig2.update_layout(showlegend=False)
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, width="stretch")
 
     # ── Row 2: Top categories bar + Heatmap ──────────────────────────────
     col3, col4 = st.columns(2)
@@ -623,7 +623,7 @@ def render_charts(df: pd.DataFrame) -> None:
         fig3.update_coloraxes(showscale=False)
         style_fig(fig3)
         fig3.update_layout(xaxis_tickangle=-35)
-        st.plotly_chart(fig3, use_container_width=True)
+        st.plotly_chart(fig3, width="stretch")
 
     with col4:
         st.markdown('<p class="section-header">🗺️ Business Distribution by City & Category</p>',
@@ -652,7 +652,7 @@ def render_charts(df: pd.DataFrame) -> None:
             xaxis_tickangle=-30,
             coloraxis_showscale=False,
         )
-        st.plotly_chart(fig4, use_container_width=True)
+        st.plotly_chart(fig4, width="stretch")
 
     # ── Row 3: Treemap ────────────────────────────────────────────────────
     st.markdown('<p class="section-header">📊 Category Breakdown Treemap</p>',
@@ -671,7 +671,7 @@ def render_charts(df: pd.DataFrame) -> None:
     )
     style_fig(fig5)
     fig5.update_layout(margin=dict(l=5, r=5, t=30, b=5))
-    st.plotly_chart(fig5, use_container_width=True)
+    st.plotly_chart(fig5, width="stretch")
 
 
 # ---------------------------------------------------------------------------
@@ -706,7 +706,7 @@ def render_table(df: pd.DataFrame) -> None:
 
     st.dataframe(
         disp,
-        use_container_width=True,
+        width="stretch",
         height=500,
         column_config={
             "Website": st.column_config.LinkColumn(
@@ -765,7 +765,7 @@ def main() -> None:
             icon="⚠️",
         )
 
-        if st.button("🚀 Run Scraper", use_container_width=True):
+        if st.button("🚀 Run Scraper", width="stretch"):
             with st.spinner(
                 "Scraping GTA business data... This may take several minutes."
             ):
