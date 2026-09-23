@@ -401,11 +401,11 @@ def fmt_number(n: int) -> str:
 # ---------------------------------------------------------------------------
 
 def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
-       with st.sidebar:
+    with st.sidebar:
         st.markdown(
             "<h2 style='color:#63b3ed;font-size:1.3rem;font-weight:700;"
-            "margin-bottom:0.2rem'>🔎 Filters</h2>"
-            "<p style='color:#718096;font-size:0.82rem;margin-top:0'>"
+            "margin-bottom:0.2rem;'>🔎 Filters</h2>"
+            "<p style='color:#718096;font-size:0.82rem;margin-top:0;'>"
             "Refine the directory</p>",
             unsafe_allow_html=True,
         )
@@ -425,49 +425,45 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
             st.rerun()
 
         # City filter
-        cities_available = sorted(df["city"].dropna().unique().tolist())
+        cities = sorted(df["city"].dropna().unique().tolist())
 
         selected_cities = st.multiselect(
-            "🏙️ City",
-            options=cities_available,
-            default=[],
-            placeholder="All cities",
+            "🏢 City",
+            options=cities,
             key="filter_city",
         )
 
         # Category filter
-        cats_available = sorted(df["category"].dropna().unique().tolist())
+        categories = sorted(df["category"].dropna().unique().tolist())
 
         selected_cats = st.multiselect(
-            "📁 Category",
-            options=cats_available,
-            default=[],
-            placeholder="All categories",
+            "📂 Category",
+            options=categories,
             key="filter_cat",
         )
 
-        # Name search
+        # Business name search
         name_query = st.text_input(
             "🔤 Search Business Name",
             placeholder="e.g. Tim Hortons",
             key="filter_name",
         )
 
-        st.divider()
-
-        # Has phone toggle
+        # Phone filter
         has_phone = st.checkbox(
             "📞 Has phone number",
             value=False,
             key="filter_phone",
         )
 
+        # Website filter
         has_website = st.checkbox(
             "🌐 Has website",
             value=False,
             key="filter_website",
         )
-            st.divider()
+
+        st.divider()
 
     # Apply filters
     filtered = df.copy()
@@ -502,25 +498,6 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
         ]
 
     return filtered
-# ---------------------------------------------------------------------------
-# Charts
-# ---------------------------------------------------------------------------
-
-def render_charts(df: pd.DataFrame) -> None:
-    if df.empty:
-        st.markdown('<div class="no-data">No data to display. Run the scraper first.</div>',
-                    unsafe_allow_html=True)
-        return
-
-    # ── Row 1: Businesses by City + Businesses by Category ────────────────
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown('<p class="section-header">🏙️ Businesses by City</p>',
-                    unsafe_allow_html=True)
-        city_counts = (
-            df["city"].value_counts().reset_index()
-            .rename(columns={"city": "City", "count": "Count"})
         )
         fig = px.bar(
             city_counts,
