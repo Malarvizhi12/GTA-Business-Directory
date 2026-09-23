@@ -409,25 +409,40 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
             unsafe_allow_html=True,
         )
         st.divider()
+# ---------------------------------------------------------------------------
+# Clear all filters
+# ---------------------------------------------------------------------------
+def clear_filters():
+    st.session_state.filter_city = []
+    st.session_state.filter_cat = []
+    st.session_state.filter_name = ""
+    st.session_state.filter_phone = False
+    st.session_state.filter_website = False
 
-        # City filter
-        cities_available = sorted(df["city"].dropna().unique().tolist())
-        selected_cities = st.multiselect(
-            "🏙️ City",
-            options=cities_available,
-            default=[],
-            placeholder="All cities",
-            key="filter_city",
-        )
 
-        # Category filter
-        cats_available = sorted(df["category"].dropna().unique().tolist())
-        selected_cats = st.multiselect(
-            "📂 Category",
-            options=cats_available,
-            default=[],
-            placeholder="All categories",
-            key="filter_cat",
+if st.button("🧹 Clear all filters", use_container_width=True):
+    clear_filters()
+    st.rerun()
+
+
+# City filter
+cities_available = sorted(df["city"].dropna().unique().tolist())
+selected_cities = st.multiselect(
+    "🏙️ City",
+     options=cities_available,
+     default=[],
+     placeholder="All cities",
+     key="filter_city",
+ )
+
+# Category filter
+cats_available = sorted(df["category"].dropna().unique().tolist())
+selected_cats = st.multiselect(
+      "📂 Category",
+       options=cats_available,
+       default=[],
+        placeholder="All categories",
+        key="filter_cat",
         )
 
         # Name search
