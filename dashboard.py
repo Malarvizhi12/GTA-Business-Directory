@@ -444,20 +444,7 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
         has_website = st.checkbox("🌐 Has website", value=False, key="filter_website")
 
         st.divider()
-        def clear_filters():
-    st.session_state.filter_city = []
-    st.session_state.filter_cat = []
-    st.session_state.filter_name = ""
-    st.session_state.filter_phone = False
-    st.session_state.filter_website = False
-
-
-st.button(
-    "🧹 Clear all filters",
-    use_container_width=True,
-    on_click=clear_filters,
-)
-
+       
     # Apply filters
     filtered = df.copy()
     if selected_cities:
