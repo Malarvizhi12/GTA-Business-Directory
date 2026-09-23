@@ -469,27 +469,27 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
         )
 
         st.divider()
-    # Apply filters
-filtered = df.copy()
+        # Apply filters
+    filtered = df.copy()
 
-if selected_cities:
-    filtered = filtered[
-        filtered["city"].isin(selected_cities)
-    ]
+    if selected_cities:
+        filtered = filtered[
+            filtered["city"].isin(selected_cities)
+        ]
 
-if selected_cats:
-    filtered = filtered[
-        filtered["category"].isin(selected_cats)
-    ]
+    if selected_cats:
+        filtered = filtered[
+            filtered["category"].isin(selected_cats)
+        ]
 
-if name_query:
-    filtered = filtered[
-        filtered["business_name"].str.contains(
-            name_query,
-            case=False,
-            na=False,
-        )
-    ]
+    if name_query:
+        filtered = filtered[
+            filtered["business_name"].str.contains(
+                name_query,
+                case=False,
+                na=False,
+            )
+        ]
 
     if has_phone:
         filtered = filtered[
@@ -501,27 +501,7 @@ if name_query:
             filtered["website"].notna()
         ]
 
-    return filtered
-
-
-# ---------------------------------------------------------------------------
-# KPI cards
-# ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
-# KPI cards
-# ---------------------------------------------------------------------------
-
-def render_kpis(df_full: pd.DataFrame, df_filtered: pd.DataFrame) -> None:
-    total_biz  = len(df_filtered)
-    num_cities = df_filtered["city"].nunique()
-    num_cats   = df_filtered["category"].nunique()
-    pct_phone  = (
-        (df_filtered["phone"].notna().sum() / total_biz * 100)
-        if total_biz > 0 else 0
-    )
-
-    kpi_data = [
+    return filtered    kpi_data = [
         ("🏢", fmt_number(total_biz),         "Total Businesses"),
         ("🏙️", fmt_number(num_cities),         "Cities Covered"),
         ("📂", fmt_number(num_cats),           "Business Categories"),
