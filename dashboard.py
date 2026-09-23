@@ -401,92 +401,108 @@ def fmt_number(n: int) -> str:
 # ---------------------------------------------------------------------------
 
 def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
-    with st.sidebar:
+       with st.sidebar:
         st.markdown(
             "<h2 style='color:#63b3ed;font-size:1.3rem;font-weight:700;"
-            "margin-bottom:0.2rem'>🔍 Filters</h2>"
-            "<p style='color:#718096;font-size:0.82rem;margin-top:0'>Refine the directory</p>",
+            "margin-bottom:0.2rem'>🔎 Filters</h2>"
+            "<p style='color:#718096;font-size:0.82rem;margin-top:0'>"
+            "Refine the directory</p>",
             unsafe_allow_html=True,
         )
+
         st.divider()
-# ---------------------------------------------------------------------------
-# Clear all filters
-# ---------------------------------------------------------------------------
-def clear_filters():
-    st.session_state.filter_city = []
-    st.session_state.filter_cat = []
-    st.session_state.filter_name = ""
-    st.session_state.filter_phone = False
-    st.session_state.filter_website = False
 
+        # Clear all filters
+        def clear_filters():
+            st.session_state.filter_city = []
+            st.session_state.filter_cat = []
+            st.session_state.filter_name = ""
+            st.session_state.filter_phone = False
+            st.session_state.filter_website = False
 
-if st.button("🧹 Clear all filters", use_container_width=True):
-    clear_filters()
-    st.rerun()
+        if st.button("🧹 Clear all filters", use_container_width=True):
+            clear_filters()
+            st.rerun()
 
+        # City filter
+        cities_available = sorted(df["city"].dropna().unique().tolist())
 
-    # City filter
-    cities_available = sorted(df["city"].dropna().unique().tolist())
-    selected_cities = st.multiselect(
-        "🏙️ City",
-        options=cities_available,
-        default=[],
-        placeholder="All cities",
-        key="filter_city",
-    )
+        selected_cities = st.multiselect(
+            "🏙️ City",
+            options=cities_available,
+            default=[],
+            placeholder="All cities",
+            key="filter_city",
+        )
 
-    # Category filter
-    cats_available = sorted(df["category"].dropna().unique().tolist())
-    selected_cats = st.multiselect(
-        "📁 Category",
-        options=cats_available,
-        default=[],
-        placeholder="All categories",
-        key="filter_cat",
-    )
+        # Category filter
+        cats_available = sorted(df["category"].dropna().unique().tolist())
 
-    # Name search
-    name_query = st.text_input(
-        "🔤 Search Business Name",
-        placeholder="e.g. Tim Hortons",
-        key="filter_name",
-    )
+        selected_cats = st.multiselect(
+            "📁 Category",
+            options=cats_available,
+            default=[],
+            placeholder="All categories",
+            key="filter_cat",
+        )
 
-    st.divider()
+        # Name search
+        name_query = st.text_input(
+            "🔤 Search Business Name",
+            placeholder="e.g. Tim Hortons",
+            key="filter_name",
+        )
 
-    # Has phone toggle
-    has_phone = st.checkbox(
-        "📞 Has phone number",
-        value=False,
-        key="filter_phone",
-    )
+        st.divider()
 
-    has_website = st.checkbox(
-        "🌐 Has website",
-        value=False,
-        key="filter_website",
-    )
-    
-    st.divider()
-       
+        # Has phone toggle
+        has_phone = st.checkbox(
+            "📞 Has phone number",
+            value=False,
+            key="filter_phone",
+        )
+
+        has_website = st.checkbox(
+            "🌐 Has website",
+            value=False,
+            key="filter_website",
+        )
+
+        st.divider()
+
     # Apply filters
     filtered = df.copy()
+
     if selected_cities:
-        filtered = filtered[filtered["city"].isin(selected_cities)]
+        filtered = filtered[
+            filtered["city"].isin(selected_cities)
+        ]
+
     if selected_cats:
-        filtered = filtered[filtered["category"].isin(selected_cats)]
+        filtered = filtered[
+            filtered["category"].isin(selected_cats)
+        ]
+
     if name_query:
         filtered = filtered[
-            filtered["business_name"]
-            .str.contains(name_query, case=False, na=False)
+            filtered["business_name"].str.contains(
+                name_query,
+                case=False,
+                na=False,
+            )
         ]
+
     if has_phone:
-        filtered = filtered[filtered["phone"].notna()]
+        filtered = filtered[
+            filtered["phone"].notna()
+        ]
+
     if has_website:
-        filtered = filtered[filtered["website"].notna()]
+        filtered = filtered[
+            filtered["website"].notna()
+        ]
 
     return filtered
-
 
 # ---------------------------------------------------------------------------
 # KPI cards
