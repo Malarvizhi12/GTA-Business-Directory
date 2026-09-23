@@ -492,21 +492,51 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
             filtered["phone"].notna()
         ]
 
-    if has_website:
+        if has_website:
         filtered = filtered[
             filtered["website"].notna()
         ]
 
     return filtered
+
+
+# ---------------------------------------------------------------------------
+# Charts
+# ---------------------------------------------------------------------------
+
+def render_charts(df: pd.DataFrame) -> None:
+    if df.empty:
+        st.markdown(
+            '<div class="no-data">No data to display. Run the scraper first.</div>',
+            unsafe_allow_html=True
         )
+        return
+
+    # --- Row 1: Businesses by City + Businesses by Category ---
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            '<p class="section-header">🏢 Businesses by City</p>',
+            unsafe_allow_html=True
+        )
+
+        city_counts = (
+            df["city"].value_counts()
+            .reset_index()
+            .rename(columns={"city": "City", "count": "Count"})
+        )
+
         fig = px.bar(
             city_counts,
-            x="Count", y="City",
+            x="Count",
+            y="City",
             orientation="h",
             color="Count",
             color_continuous_scale=["#1a365d", "#4299e1", "#90cdf4"],
             text="Count",
         )
+
         fig.update_traces(textposition="outside", textfont_size=11)
         fig.update_coloraxes(showscale=False)
         style_fig(fig)
