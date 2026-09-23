@@ -425,38 +425,47 @@ if st.button("🧹 Clear all filters", use_container_width=True):
     st.rerun()
 
 
-# City filter
-cities_available = sorted(df["city"].dropna().unique().tolist())
-selected_cities = st.multiselect(
-    "🏙️ City",
-     options=cities_available,
-     default=[],
-     placeholder="All cities",
-     key="filter_city",
- )
+    # City filter
+    cities_available = sorted(df["city"].dropna().unique().tolist())
+    selected_cities = st.multiselect(
+        "🏙️ City",
+        options=cities_available,
+        default=[],
+        placeholder="All cities",
+        key="filter_city",
+    )
 
-# Category filter
-cats_available = sorted(df["category"].dropna().unique().tolist())
-selected_cats = st.multiselect(
-      "📂 Category",
-       options=cats_available,
-       default=[],
+    # Category filter
+    cats_available = sorted(df["category"].dropna().unique().tolist())
+    selected_cats = st.multiselect(
+        "📁 Category",
+        options=cats_available,
+        default=[],
         placeholder="All categories",
         key="filter_cat",
-        )
+    )
 
-        # Name search
-        name_query = st.text_input(
-            "🔤 Search Business Name",
-            placeholder="e.g. Tim Hortons",
-            key="filter_name",
-        )
+    # Name search
+    name_query = st.text_input(
+        "🔤 Search Business Name",
+        placeholder="e.g. Tim Hortons",
+        key="filter_name",
+    )
 
-        st.divider()
+    st.divider()
 
-        # Has phone toggle
-        has_phone = st.checkbox("📞 Has phone number", value=False, key="filter_phone")
-        has_website = st.checkbox("🌐 Has website", value=False, key="filter_website")
+    # Has phone toggle
+    has_phone = st.checkbox(
+        "📞 Has phone number",
+        value=False,
+        key="filter_phone",
+    )
+
+    has_website = st.checkbox(
+        "🌐 Has website",
+        value=False,
+        key="filter_website",
+    )
 
         st.divider()
        
