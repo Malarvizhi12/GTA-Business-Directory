@@ -491,24 +491,6 @@ if name_query:
         )
     ]
 
-if has_phone:
-    filtered = filtered[
-        filtered["phone"].notna()
-    ]
-
-if has_website:
-    filtered = filtered[
-        filtered["website"].notna()
-    ]
-
-return filtered
-    return filtered
-                name_query,
-                case=False,
-                na=False,
-            )
-        ]
-
     if has_phone:
         filtered = filtered[
             filtered["phone"].notna()
@@ -520,6 +502,11 @@ return filtered
         ]
 
     return filtered
+
+
+# ---------------------------------------------------------------------------
+# KPI cards
+# ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
 # KPI cards
