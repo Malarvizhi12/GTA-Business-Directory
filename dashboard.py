@@ -285,8 +285,7 @@ COLOUR_SEQ = [
 def style_fig(fig: go.Figure) -> go.Figure:
     fig.update_layout(
         **PLOTLY_LAYOUT,
-        xaxis_title="",
-        yaxis_title="",
+        title_text="",
     )
     return fig
 
