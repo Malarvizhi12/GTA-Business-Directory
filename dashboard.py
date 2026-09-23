@@ -491,8 +491,7 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
         filtered = filtered[
             filtered["phone"].notna()
         ]
-
-        if has_website:
+    if has_website:
         filtered = filtered[
             filtered["website"].notna()
         ]
