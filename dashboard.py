@@ -497,7 +497,40 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
         ]
 
     return filtered
+# ---------------------------------------------------------------------------
+# KPI cards
+# ---------------------------------------------------------------------------
 
+def render_kpis(df_full: pd.DataFrame, df_filtered: pd.DataFrame) -> None:
+    total_biz = len(df_filtered)
+    num_cities = df_filtered["city"].nunique()
+    num_cats = df_filtered["category"].nunique()
+
+    pct_phone = (
+        (df_filtered["phone"].notna().sum() / total_biz * 100)
+        if total_biz > 0 else 0
+    )
+
+    kpi_data = [
+        ("🏢", fmt_number(total_biz), "Total Businesses"),
+        ("🏙️", fmt_number(num_cities), "Cities Covered"),
+        ("📂", fmt_number(num_cats), "Business Categories"),
+        ("📞", f"{pct_phone:.0f}%", "Have Phone Listed"),
+    ]
+
+    cols = st.columns(4)
+
+    for col, (icon, value, label) in zip(cols, kpi_data):
+        col.markdown(
+            f"""
+            <div class="kpi-card">
+                <div class="kpi-icon">{icon}</div>
+                <div class="kpi-value">{value}</div>
+                <div class="kpi-label">{label}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 # ---------------------------------------------------------------------------
 # Charts
