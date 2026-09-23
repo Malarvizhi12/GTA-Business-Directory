@@ -470,37 +470,38 @@ def render_sidebar(df: pd.DataFrame) -> pd.DataFrame:
 
         st.divider()
     # Apply filters
-    filtered = df.copy()
+filtered = df.copy()
 
-    if selected_cities:
-        filtered = filtered[
-            filtered["city"].isin(selected_cities)
-        ]
+if selected_cities:
+    filtered = filtered[
+        filtered["city"].isin(selected_cities)
+    ]
 
-    if selected_cats:
-        filtered = filtered[
-            filtered["category"].isin(selected_cats)
-        ]
+if selected_cats:
+    filtered = filtered[
+        filtered["category"].isin(selected_cats)
+    ]
 
-    if name_query:
-        filtered = filtered[
-            filtered["business_name"].str.contains(
-                name_query,
-                case=False,
-                na=False,
-            )
-        ]
+if name_query:
+    filtered = filtered[
+        filtered["business_name"].str.contains(
+            name_query,
+            case=False,
+            na=False,
+        )
+    ]
 
-    if has_phone:
-        filtered = filtered[
-            filtered["phone"].notna()
-        ]
+if has_phone:
+    filtered = filtered[
+        filtered["phone"].notna()
+    ]
 
-    if has_website:
-        filtered = filtered[
-            filtered["website"].notna()
-        ]
+if has_website:
+    filtered = filtered[
+        filtered["website"].notna()
+    ]
 
+return filtered
     return filtered
                 name_query,
                 case=False,
